@@ -6,7 +6,7 @@ AC_DEFUN([AC_C_RESTRICT],
     [AC_MSG_CHECKING([for restrict])
     ac_cv_c_restrict=no
     for ac_kw in restrict __restrict__ __restrict; do
-	AC_TRY_COMPILE([],[char * $ac_kw p;],[ac_cv_c_restrict=$ac_kw; break])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[char * $ac_kw p;]])],[ac_cv_c_restrict=$ac_kw; break],[])
     done
     AC_MSG_RESULT([$ac_cv_c_restrict])
     case $ac_cv_c_restrict in
@@ -26,8 +26,7 @@ AC_DEFUN([AC_C_ALWAYS_INLINE],
 	AC_MSG_CHECKING([for always_inline])
 	SAVE_CFLAGS="$CFLAGS"
 	CFLAGS="$CFLAGS -Wall -Werror"
-	AC_TRY_COMPILE([],[__attribute__ ((__always_inline__)) void f (void);],
-	    [ac_cv_always_inline=yes],[ac_cv_always_inline=no])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[__attribute__ ((__always_inline__)) void f (void);]])],[ac_cv_always_inline=yes],[ac_cv_always_inline=no])
 	CFLAGS="$SAVE_CFLAGS"
 	AC_MSG_RESULT([$ac_cv_always_inline])
 	if test x"$ac_cv_always_inline" = x"yes"; then
@@ -42,9 +41,7 @@ AC_DEFUN([AC_C_ATTRIBUTE_ALIGNED],
 	[ac_cv_c_attribute_aligned],
 	[ac_cv_c_attribute_aligned=0
 	for ac_cv_c_attr_align_try in 2 4 8 16 32 64; do
-	    AC_TRY_COMPILE([],
-		[static char c __attribute__ ((aligned($ac_cv_c_attr_align_try))) = 0; return c;],
-		[ac_cv_c_attribute_aligned=$ac_cv_c_attr_align_try])
+	    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[static char c __attribute__ ((aligned($ac_cv_c_attr_align_try))) = 0; return c;]])],[ac_cv_c_attribute_aligned=$ac_cv_c_attr_align_try],[])
 	done])
     if test x"$ac_cv_c_attribute_aligned" != x"0"; then
 	AC_DEFINE_UNQUOTED([ATTRIBUTE_ALIGNED_MAX],
@@ -57,7 +54,7 @@ AC_DEFUN([AC_TRY_CFLAGS],
     [AC_MSG_CHECKING([if $CC supports $1 flags])
     SAVE_CFLAGS="$CFLAGS"
     CFLAGS="$1"
-    AC_TRY_COMPILE([],[],[ac_cv_try_cflags_ok=yes],[ac_cv_try_cflags_ok=no])
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[ac_cv_try_cflags_ok=yes],[ac_cv_try_cflags_ok=no])
     CFLAGS="$SAVE_CFLAGS"
     AC_MSG_RESULT([$ac_cv_try_cflags_ok])
     if test x"$ac_cv_try_cflags_ok" = x"yes"; then
