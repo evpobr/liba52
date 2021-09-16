@@ -5,7 +5,6 @@
 *.m4 text eol=lf
 *.sh text eol=lf
 bootstrap eol=lf
-configure.in eol=lf
 
 *.dsp text=crlf
 *.dsw text=crlf
