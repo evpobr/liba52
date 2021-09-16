@@ -7,6 +7,7 @@ AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_FILES([Makefile autotools/Makefile include/Makefile test/Makefile
     doc/Makefile src/Makefile liba52/Makefile libao/Makefile vc++/Makefile])
 AM_INIT_AUTOMAKE
+LT_INIT
 AC_CONFIG_HEADERS(include/config.h)
 AM_MAINTAINER_MODE
 AC_CANONICAL_HOST
@@ -70,11 +71,6 @@ else
 	AC_TRY_CFLAGS([$OPT_CFLAGS],[CFLAGS=$OPT_CFLAGS]);;
     esac
 fi
-
-dnl Checks for libtool - this must be done after we set cflags
-AC_DISABLE_SHARED
-AC_LIBTOOL_WIN32_DLL
-AC_PROG_LIBTOOL
 
 dnl Checks for libraries.
 
