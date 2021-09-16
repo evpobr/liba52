@@ -1,3 +1,5 @@
+AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include
+
 CFLAGS = @A52DEC_CFLAGS@
 
 bin_PROGRAMS = a52dec extract_a52

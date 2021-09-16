@@ -79,8 +79,6 @@ AC_PROG_LIBTOOL
 dnl Checks for libraries.
 
 dnl Checks for header files.
-INCLUDES='-I$(top_srcdir)/include -I$(top_builddir)/include'
-AC_SUBST([INCLUDES])
 AC_CHECK_HEADERS([sys/time.h sys/timeb.h io.h])
 AC_CHECK_GENERATE_INTTYPES([include])
 
