@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_PREREQ(2.69)
+AC_PREREQ([2.71])
 AC_INIT([a52dec],[0.7.4])
 AC_CONFIG_SRCDIR([src/a52dec.c])
 AC_CONFIG_AUX_DIR(autotools)
@@ -87,7 +87,6 @@ AC_C_BIGENDIAN
 
 dnl Checks for library functions.
 AC_CHECK_FUNCS([memalign gettimeofday ftime])
-AC_TYPE_SIGNAL
 
 builtin([include],[liba52/configure.incl])
 builtin([include],[libao/configure.incl])
