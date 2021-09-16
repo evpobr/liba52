@@ -7,7 +7,7 @@ AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_FILES([Makefile autotools/Makefile include/Makefile test/Makefile
     doc/Makefile src/Makefile liba52/Makefile libao/Makefile vc++/Makefile])
 AM_INIT_AUTOMAKE
-AM_CONFIG_HEADER(include/config.h)
+AC_CONFIG_HEADERS(include/config.h)
 AM_MAINTAINER_MODE
 AC_CANONICAL_HOST
 
