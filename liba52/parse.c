@@ -32,12 +32,26 @@
 #include "bitstream.h"
 #include "tables.h"
 
-#ifdef HAVE_MEMALIGN
+#if defined HAVE_ALIGNED_ALLOC
+/* C11 */
+#define A52_ALIGNED_ALLOC(align, size) aligned_alloc (align, size)
+#define A52_ALIGNED_FREE(ptr) free (ptr)
+#elif defined HAVE__ALIGNED_MALLOC
+/*
+ * For Windows. Note size and align parameters are swapped. Requires special
+ * free function.
+ */
+#define A52_ALIGNED_ALLOC(align, size) _aligned_malloc (size, align)
+#define A52_ALIGNED_FREE(ptr) _aligned_free (ptr)
+#elif defined HAVE_MEMALIGN
 /* some systems have memalign() but no declaration for it */
 void * memalign (size_t align, size_t size);
+#define A52_ALIGNED_ALLOC(align, size) memalign (align, size)
+#define A52_ALIGNED_FREE(ptr) free (ptr)
 #else
 /* assume malloc alignment is sufficient */
-#define memalign(align,size) malloc (size)
+#define A52_ALIGNED_MALLOC(align, size) malloc (size)
+#define A52_ALIGNED_FREE(ptr) free (ptr)
 #endif
 
 typedef struct {
@@ -60,7 +74,7 @@ a52_state_t * a52_init (uint32_t mm_accel)
     if (state == NULL)
 	return NULL;
 
-    state->samples = memalign (16, 256 * 12 * sizeof (sample_t));
+    state->samples = A52_ALIGNED_ALLOC (16, 256 * 12 * sizeof (sample_t));
     if (state->samples == NULL) {
 	free (state);
 	return NULL;
@@ -896,6 +910,6 @@ int a52_block (a52_state_t * state)
 
 void a52_free (a52_state_t * state)
 {
-    free (state->samples);
+    A52_ALIGNED_FREE (state->samples);
     free (state);
 }

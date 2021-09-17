@@ -111,7 +111,7 @@ AC_TYPE_SIZE_T
 AC_C_BIGENDIAN
 
 dnl Checks for library functions.
-AC_CHECK_FUNCS([memalign gettimeofday ftime])
+AC_CHECK_FUNCS([_aligned_malloc aligned_alloc memalign gettimeofday ftime])
 
 builtin([include],[liba52/configure.incl])
 builtin([include],[libao/configure.incl])
