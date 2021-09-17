@@ -117,7 +117,7 @@ builtin([include],[liba52/configure.incl])
 builtin([include],[libao/configure.incl])
 
 AC_ARG_ENABLE([warnings],
-    [  --enable-warnings       treat warnings as errors])
+    AS_HELP_STRING([--enable-warnings], [treat warnings as errors]))
 if test x"$enable_warnings" = x"yes" -a x"$GCC" = x"yes"; then
     dnl compiler warnings
     OPT_CFLAGS="$CFLAGS -Wall -Werror"
