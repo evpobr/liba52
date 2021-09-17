@@ -74,6 +74,8 @@ fi
 
 dnl Checks for libraries.
 
+LT_LIB_M
+
 dnl Checks for header files.
 AC_CHECK_HEADERS([sys/time.h sys/timeb.h io.h])
 AC_CHECK_GENERATE_INTTYPES([include])
