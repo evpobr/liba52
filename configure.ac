@@ -12,6 +12,30 @@ AC_CONFIG_HEADERS(include/config.h)
 AM_MAINTAINER_MODE
 AC_CANONICAL_HOST
 
+dnl ------------------------------------------------------------------------------------
+dnl  Rules for library version information:
+dnl
+dnl   1. Start with version information of `0:0:0' for each libtool library.
+dnl   2. Update the version information only immediately before a public release of
+dnl      your software. More frequent updates are unnecessary, and only guarantee
+dnl      that the current interface number gets larger faster.
+dnl   3. If the library source code has changed at all since the last update, then
+dnl      increment revision (`c:r:a' becomes `c:r+1:a').
+dnl   4. If any interfaces have been added, removed, or changed since the last update,
+dnl      increment current, and set revision to 0.
+dnl   5. If any interfaces have been added since the last public release, then increment
+dnl      age.
+dnl   6. If any interfaces have been removed since the last public release, then set age
+dnl      to 0.
+
+dnl   This is libtool version of library, we add it to `--version-info` property.
+
+m4_define([lt_current], [76])
+m4_define([lt_revision], [4])
+m4_define([lt_age], [76])
+
+AC_SUBST([LIBA52_VERSION_INFO], [lt_current:lt_revision:lt_age])
+
 dnl Checks for compiler
 AC_PROG_CC
 AC_PROG_GCC_TRADITIONAL
