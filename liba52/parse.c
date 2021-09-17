@@ -50,7 +50,7 @@ void * memalign (size_t align, size_t size);
 #define A52_ALIGNED_FREE(ptr) free (ptr)
 #else
 /* assume malloc alignment is sufficient */
-#define A52_ALIGNED_MALLOC(align, size) malloc (size)
+#define A52_ALIGNED_ALLOC(align, size) malloc (size)
 #define A52_ALIGNED_FREE(ptr) free (ptr)
 #endif
 
