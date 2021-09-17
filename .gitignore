@@ -27,6 +27,7 @@ stamp-h1
 *.la
 *.lo
 *.o
+*.exe
 
 a52dec
 a52dec-*.tar.gz
