@@ -73,6 +73,13 @@ static sample_t a52_imdct_window[256];
 static void (* ifft128) (complex_t * buf);
 static void (* ifft64) (complex_t * buf);
 
+#ifdef ENABLE_RUST
+
+extern void ifft2 (complex_t * buf);
+extern void ifft4 (complex_t * buf);
+extern void ifft8 (complex_t * buf);
+#else
+
 static inline void ifft2 (complex_t * buf)
 {
     double r, i;
@@ -107,6 +114,8 @@ static inline void ifft4 (complex_t * buf)
     buf[3].real = tmp5 - tmp7;
     buf[3].imag = tmp6 - tmp8;
 }
+
+#endif
 
 /* the basic split-radix ifft butterfly */
 
@@ -167,6 +176,8 @@ static inline void ifft4 (complex_t * buf)
     a1.imag += tmp4;				\
 } while (0)
 
+#ifndef ENABLE_RUST
+
 static inline void ifft8 (complex_t * buf)
 {
     double tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7, tmp8;
@@ -178,7 +189,9 @@ static inline void ifft8 (complex_t * buf)
     BUTTERFLY_HALF (buf[1], buf[3], buf[5], buf[7], roots16[1]);
 }
 
-static void ifft_pass (complex_t * buf, sample_t * weight, int n)
+#endif
+
+void ifft_pass (complex_t * buf, sample_t * weight, int n)
 {
     complex_t * buf1;
     complex_t * buf2;

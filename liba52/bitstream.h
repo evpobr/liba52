@@ -50,18 +50,8 @@ void a52_bitstream_set_ptr (a52_state_t * state, uint8_t * buf);
 uint32_t a52_bitstream_get_bh (a52_state_t * state, uint32_t num_bits);
 int32_t a52_bitstream_get_bh_2 (a52_state_t * state, uint32_t num_bits);
 
-static inline uint32_t bitstream_get (a52_state_t * state, uint32_t num_bits)
-{
-    uint32_t result;
-	
-    if (num_bits < state->bits_left) {
-	result = (state->current_word << (32 - state->bits_left)) >> (32 - num_bits);
-	state->bits_left -= num_bits;
-	return result;
-    }
+uint32_t bitstream_get (a52_state_t * state, uint32_t num_bits);
 
-    return a52_bitstream_get_bh (state, num_bits);
-}
 
 static inline int32_t bitstream_get_2 (a52_state_t * state, uint32_t num_bits)
 {

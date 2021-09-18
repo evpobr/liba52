@@ -31,6 +31,10 @@
 
 #define BUFFER_SIZE 4096
 
+void bitstream_fill_current (a52_state_t * state);
+
+#ifndef ENABLE_RUST
+
 void a52_bitstream_set_ptr (a52_state_t * state, uint8_t * buf)
 {
     int align;
@@ -41,12 +45,27 @@ void a52_bitstream_set_ptr (a52_state_t * state, uint8_t * buf)
     bitstream_get (state, align * 8);
 }
 
-static inline void bitstream_fill_current (a52_state_t * state)
+void bitstream_fill_current (a52_state_t * state)
 {
     uint32_t tmp;
 
     tmp = *(state->buffer_start++);
     state->current_word = swab32 (tmp);
+}
+
+#endif
+
+uint32_t bitstream_get (a52_state_t * state, uint32_t num_bits)
+{
+    uint32_t result;
+	
+    if (num_bits < state->bits_left) {
+	result = (state->current_word << (32 - state->bits_left)) >> (32 - num_bits);
+	state->bits_left -= num_bits;
+	return result;
+    }
+
+    return a52_bitstream_get_bh (state, num_bits);
 }
 
 /*

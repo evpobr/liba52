@@ -65,6 +65,8 @@ typedef struct {
 
 static uint8_t halfrate[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3};
 
+#ifndef ENABLE_RUST
+
 a52_state_t * a52_init (uint32_t mm_accel)
 {
     a52_state_t * state;
@@ -142,6 +144,10 @@ int a52_syncinfo (uint8_t * buf, int * flags,
     }
 }
 
+#endif
+
+#ifndef ENABLE_RUST
+
 int a52_frame (a52_state_t * state, uint8_t * buf, int * flags,
 	       sample_t * level, sample_t bias)
 {
@@ -214,6 +220,10 @@ int a52_frame (a52_state_t * state, uint8_t * buf, int * flags,
     return 0;
 }
 
+#endif
+
+#ifndef ENABLE_RUST
+
 void a52_dynrng (a52_state_t * state,
 		 sample_t (* call) (sample_t, void *), void * data)
 {
@@ -224,6 +234,8 @@ void a52_dynrng (a52_state_t * state,
 	state->dynrngdata = data;
     }
 }
+
+#endif
 
 static int parse_exponents (a52_state_t * state, int expstr, int ngrps,
 			    uint8_t exponent, uint8_t * dest)
@@ -908,8 +920,12 @@ int a52_block (a52_state_t * state)
     return 0;
 }
 
+#ifndef ENABLE_RUST
+
 void a52_free (a52_state_t * state)
 {
     A52_ALIGNED_FREE (state->samples);
     free (state);
 }
+
+#endif
